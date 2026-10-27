@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPulse — Teacher Performance & Development Tracking System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <div class="brand-icon">EP</div>
+          <div class="brand-text">
+            <h1>EduPulse</h1>
+            <span>Faculty Excellence Suite</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Core Workspace</div>
+        <button class="nav-item active" data-tab="overview">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          <span>Overview Dashboard</span>
+        </button>
+        <button class="nav-item" data-tab="teachers">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span>Teacher Profiles</span>
+        </button>
+        <button class="nav-item" data-tab="attendance">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span>Attendance & Punctuality</span>
+        </button>
+        <button class="nav-item" data-tab="training">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+          <span>Training & Certifications</span>
+        </button>
+        <button class="nav-item" data-tab="feedback">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <span>Feedback System</span>
+        </button>
+        <button class="nav-item" data-tab="lessons">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h6"/></svg>
+          <span>Lesson Plans</span>
+        </button>
+
+        <div class="nav-section-label">Insights & Recognition</div>
+        <button class="nav-item" data-tab="analytics">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          <span>Visual Analytics</span>
+        </button>
+        <button class="nav-item" data-tab="gamification">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          <span>Gamification & Badges</span>
+        </button>
+        <button class="nav-item" data-tab="admin">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <span>Admin Dashboard</span>
+          <span id="nav-pending-badge" class="nav-badge">2</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="role-switcher-box">
+          <label for="role-switcher">Active Access Role</label>
+          <select id="role-switcher" class="role-select">
+            <option value="admin">Principal / School Admin</option>
+            <option value="teacher">Educator Self-Portal</option>
+            <option value="evaluator">Peer Evaluator</option>
+          </select>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          <div class="page-header-meta">
+            <h2 id="page-title">Executive Performance Overview</h2>
+            <p id="page-subtitle">Real-time insights into teaching excellence, classroom engagement, and professional growth</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="global-search">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="global-search-input" placeholder="Quick search faculty or subject...">
+          </div>
+          <button id="theme-toggle-btn" class="icon-btn" title="Switch Light/Dark Theme">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </button>
+          <button class="btn btn-primary btn-sm" data-open-modal="modal-feedback">+ Quick Evaluate</button>
+        </div>
+      </header>
+
+      <main id="main-content" class="content-area"></main>
+    </div>
+  </div>
+
+  <div id="modal-teacher" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="card-title">Add New Educator Profile</h3>
+        <button class="btn btn-secondary btn-sm" data-close-modal="true">Close</button>
+      </div>
+      <form id="form-add-teacher">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="t-name">Full Name</label>
+            <input type="text" id="t-name" class="input-control" required placeholder="e.g., Dr. Chaminda Silva">
+          </div>
+          <div class="form-group">
+            <label for="t-role">Title / Instructional Role</label>
+            <input type="text" id="t-role" class="input-control" required placeholder="e.g., G.C.E. A/L Chemistry Lead">
+          </div>
+          <div class="form-group">
+            <label for="t-dept">Academic Department</label>
+            <select id="t-dept" class="select-control">
+              <option value="STEM & Robotics">STEM & Robotics</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Humanities">Humanities</option>
+              <option value="Creative Arts">Creative Arts</option>
+              <option value="Languages">Languages</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="t-exp">Years of Experience</label>
+            <input type="number" id="t-exp" class="input-control" min="1" max="40" value="5" required>
+          </div>
+          <div class="form-group full">
+            <label for="t-email">Institutional Email</label>
+            <input type="email" id="t-email" class="input-control" required placeholder="c.silva@royalcrest.lk">
+          </div>
+          <div class="form-group full">
+            <label for="t-bio">Professional Summary & Specializations</label>
+            <textarea id="t-bio" class="input-control" rows="3" required placeholder="Briefly describe instructional philosophy and lab/classroom focus..."></textarea>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;">
+          <button type="button" class="btn btn-secondary" data-close-modal="true">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Educator Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-attendance" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="card-title">Log Daily Attendance & Punctuality</h3>
+        <button class="btn btn-secondary btn-sm" data-close-modal="true">Close</button>
+      </div>
+      <form id="form-add-attendance">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="a-teacher">Select Educator</label>
+            <select id="a-teacher" class="select-control dynamic-teacher-select"></select>
+          </div>
+          <div class="form-group">
+            <label for="a-date">Date</label>
+            <input type="date" id="a-date" class="input-control" value="2026-10-27" required>
+          </div>
+          <div class="form-group">
+            <label for="a-time">Check-In Time</label>
+            <input type="text" id="a-time" class="input-control" value="07:42 AM" required>
+          </div>
+          <div class="form-group">
+            <label for="a-status">Punctuality Status</label>
+            <select id="a-status" class="select-control">
+              <option value="On Time">On Time</option>
+              <option value="Late">Late</option>
+              <option value="Authorized Leave">Authorized Leave</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="a-classes">Classes Covered</label>
+            <input type="number" id="a-classes" class="input-control" min="1" max="8" value="5" required>
+          </div>
+          <div class="form-group full">
+            <label for="a-note">Duty / Schedule Note</label>
+            <input type="text" id="a-note" class="input-control" placeholder="e.g., Morning assembly supervision">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;">
+          <button type="button" class="btn btn-secondary" data-close-modal="true">Cancel</button>
+          <button type="submit" class="btn btn-primary">Record Attendance</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-training" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="card-title">Enroll or Log Professional Certification</h3>
+        <button class="btn btn-secondary btn-sm" data-close-modal="true">Close</button>
+      </div>
+      <form id="form-add-training">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="tr-teacher">Select Educator</label>
+            <select id="tr-teacher" class="select-control dynamic-teacher-select"></select>
+          </div>
+          <div class="form-group full">
+            <label for="tr-title">Course / Certification Title</label>
+            <input type="text" id="tr-title" class="input-control" required placeholder="e.g., Cognitive Load Theory in Secondary Math">
+          </div>
+          <div class="form-group">
+            <label for="tr-provider">Accrediting Institution</label>
+            <input type="text" id="tr-provider" class="input-control" required placeholder="e.g., NIE Maharagama / University of Moratuwa">
+          </div>
+          <div class="form-group">
+            <label for="tr-category">Domain Category</label>
+            <select id="tr-category" class="select-control">
+              <option value="Pedagogy & AI">Pedagogy & AI</option>
+              <option value="Curriculum">Curriculum</option>
+              <option value="Inclusive Teaching">Inclusive Teaching</option>
+              <option value="Instructional Tech">Instructional Tech</option>
+              <option value="Lab Leadership">Lab Leadership</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tr-hours">Accredited PD Hours</label>
+            <input type="number" id="tr-hours" class="input-control" min="2" max="80" value="16" required>
+          </div>
+          <div class="form-group">
+            <label for="tr-status">Completion Status</label>
+            <select id="tr-status" class="select-control">
+              <option value="Certified">Certified (100%)</option>
+              <option value="In Progress">In Progress (50%)</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;">
+          <button type="button" class="btn btn-secondary" data-close-modal="true">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Training Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-feedback" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="card-title">Submit Classroom Observation / Student Feedback</h3>
+        <button class="btn btn-secondary btn-sm" data-close-modal="true">Close</button>
+      </div>
+      <form id="form-add-feedback">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="fb-teacher">Educator Evaluated</label>
+            <select id="fb-teacher" class="select-control dynamic-teacher-select"></select>
+          </div>
+          <div class="form-group">
+            <label for="fb-source">Evaluation Source</label>
+            <select id="fb-source" class="select-control">
+              <option value="Student">Student Cohort Survey</option>
+              <option value="Peer Observation">Peer Walkthrough</option>
+              <option value="Admin Evaluation">Leadership Appraisal</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="fb-reviewer">Reviewer / Cohort Identifier</label>
+            <input type="text" id="fb-reviewer" class="input-control" required placeholder="e.g., Grade 13 A/L Physical Science Batch">
+          </div>
+          <div class="form-group">
+            <label for="fb-clarity">Instructional Clarity (1-5)</label>
+            <input type="number" id="fb-clarity" class="input-control" min="1" max="5" step="0.5" value="5" required>
+          </div>
+          <div class="form-group">
+            <label for="fb-engagement">Student Engagement (1-5)</label>
+            <input type="number" id="fb-engagement" class="input-control" min="1" max="5" step="0.5" value="5" required>
+          </div>
+          <div class="form-group full">
+            <label for="fb-support">Classroom Support & Inclusivity (1-5)</label>
+            <input type="number" id="fb-support" class="input-control" min="1" max="5" step="0.5" value="5" required>
+          </div>
+          <div class="form-group full">
+            <label for="fb-comment">Qualitative Observation Notes</label>
+            <textarea id="fb-comment" class="input-control" rows="3" required placeholder="Share specific examples of teaching impact, pacing, and student participation..."></textarea>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;">
+          <button type="button" class="btn btn-secondary" data-close-modal="true">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish Evaluation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-lesson" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="card-title">Submit Weekly Lesson Plan Blueprint</h3>
+        <button class="btn btn-secondary btn-sm" data-close-modal="true">Close</button>
+      </div>
+      <form id="form-add-lesson">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="lp-teacher">Lead Educator</label>
+            <select id="lp-teacher" class="select-control dynamic-teacher-select"></select>
+          </div>
+          <div class="form-group">
+            <label for="lp-bloom">Bloom's Taxonomy Target</label>
+            <select id="lp-bloom" class="select-control">
+              <option value="Evaluate & Create">Evaluate & Create</option>
+              <option value="Analyze & Apply">Analyze & Apply</option>
+              <option value="Understand & Apply">Understand & Apply</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="lp-title">Lesson Unit Title</label>
+            <input type="text" id="lp-title" class="input-control" required placeholder="e.g., CRISPR Gene Editing Ethics & Molecular Modeling">
+          </div>
+          <div class="form-group">
+            <label for="lp-subject">Course / Subject</label>
+            <input type="text" id="lp-subject" class="input-control" required placeholder="e.g., G.C.E. A/L Biology">
+          </div>
+          <div class="form-group">
+            <label for="lp-grade">Target Grade Level</label>
+            <input type="text" id="lp-grade" class="input-control" required placeholder="e.g., Grade 12">
+          </div>
+          <div class="form-group full">
+            <label for="lp-objectives">Learning Objectives & Assessment Outcomes</label>
+            <textarea id="lp-objectives" class="input-control" rows="2" required placeholder="What measurable skills will students demonstrate by the end of the session?"></textarea>
+          </div>
+          <div class="form-group full">
+            <label for="lp-resources">Instructional Materials & Lab Apparatus</label>
+            <input type="text" id="lp-resources" class="input-control" required placeholder="e.g., 3D molecular kits, case study dossier, exit ticket form">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;">
+          <button type="button" class="btn btn-secondary" data-close-modal="true">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Lesson Plan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
